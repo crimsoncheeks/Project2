@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char alphabetNums[38] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+                         'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                 '1','2','3','4','5','6','7','8', '9','0',
+                 ' ', '.'};
+
+string morse[38] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",
+                    ".---","-.-",".-..","--","-.","---",".--.","--.-",
+                    ".-.","...","-","..-","...-",".--","-..-","-.--",
+                    "--..",".----","..---","...--","....-",".....","-....",
+                    "--....","---..","----.","-----", "/", "!"};
+
+void getMorse()
+{
+    string words;
+    string morseWords;
+    cout << "Enter up to 250 characters to convert ending in a period: ";
+    getline(cin, words);
+    for (int i = 0; i < words.length(); i++) {
+        for (int j = 0; j < 38; j++)
+        {
+            if (toupper(words.at(i)) == alphabetNums[j]) {
+                cout << morse[j] << " ";
+            }
+        }
+    }
+}
+
+string morseCracker(string &morseWords)
+{
+    string morseWords2;
+    string buffer = "";
+    cout << "Enter up to 1000 characters of morse code: ";
+    getline(cin, morseWords);
+    for (int i = 0; i < morseWords.length(); i++)
+    {
+        if(morseWords.at(i) == ' ')
+        {
+            for (int t = 0; t < 38; t++) {
+                if (buffer == morse[t]) {
+                    morseWords2 += alphabetNums[t];
+                }
+            }
+            buffer = "";
+        }
+        else{
+            buffer += morseWords.at(i);
+        }
+    }
+
+    return morseWords2;
+}
+
+int main()
+{
+    string command;
+    string output;
+    cout << "Enter in a command" << endl << ">";
+    cin >> command;
+    while (command != "EXIT") {
+        if (command == "MORSE") {
+            cin.ignore();
+            getMorse();
+        } else if (command == "ALPHA") {
+            cin.ignore();
+            string morseCode;
+            cout << morseCracker(morseCode);
+        }
+        else
+        {
+            cout << "Invalid entry.";
+        }
+        cout << endl << "Enter in a command" << endl << ">";
+        cin >> command;
+    }
+
+    return 0;
+}
+
+//- .... . / --.- ..- .. -.-. -.- / -... .-. --- / .-- -. / ..-. ----..- / .--- ..- -- .--. . / -.. / --- ...- . .-. / - .... . / .-...- --.. -.-- / -.. --- --. !
